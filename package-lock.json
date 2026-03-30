@@ -1,0 +1,5 @@
+{
+  "name": "CampusConnect",
+  "description": "A real-time college notice board for students and admins with category-based subscriptions and push notifications.",
+  "requestFramePermissions": ["notifications"]
+}

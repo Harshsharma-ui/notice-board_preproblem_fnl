@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "Notice": {
+      "title": "Notice",
+      "description": "A notice posted on the board.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The title of the notice." },
+        "description": { "type": "string", "description": "The detailed description of the notice." },
+        "category": { "type": "string", "enum": ["Academic", "Placement", "Events", "Scholarships", "Sports", "Hostel", "General"], "description": "The category of the notice." },
+        "urgency": { "type": "string", "enum": ["Normal", "Important", "Urgent"], "description": "The urgency level of the notice." },
+        "expiryDate": { "type": "string", "format": "date-time", "description": "The date when the notice expires." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "The timestamp when the notice was created." },
+        "attachmentUrl": { "type": "string", "description": "Optional URL for a file attachment (PDF/Image)." },
+        "pinned": { "type": "boolean", "description": "Whether the notice is pinned to the top." },
+        "authorUid": { "type": "string", "description": "The UID of the admin who created the notice." }
+      },
+      "required": ["title", "description", "category", "urgency", "expiryDate", "createdAt", "pinned", "authorUid"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "A user's subscription to a category.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The UID of the user." },
+        "category": { "type": "string", "description": "The category the user is subscribed to." },
+        "fcmToken": { "type": "string", "description": "The FCM token for push notifications." }
+      },
+      "required": ["userId", "category", "fcmToken"]
+    },
+    "User": {
+      "title": "User",
+      "description": "A user of the application.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique ID of the user." },
+        "email": { "type": "string", "description": "The email address of the user." },
+        "role": { "type": "string", "enum": ["admin", "student"], "description": "The role of the user." },
+        "displayName": { "type": "string", "description": "The display name of the user." }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "A system notification or push alert.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The title of the notification." },
+        "message": { "type": "string", "description": "The message content." },
+        "category": { "type": "string", "description": "The category of the notification." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the notification was created." }
+      },
+      "required": ["title", "message", "category", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/notices/{noticeId}": {
+      "schema": "Notice",
+      "description": "Collection of all notices."
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Collection of system notifications."
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": "Subscription",
+      "description": "Collection of user subscriptions for push notifications."
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of user profiles and roles."
+    }
+  }
+}
